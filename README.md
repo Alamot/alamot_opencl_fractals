@@ -63,18 +63,17 @@ options:
 ## Mouse and keyboard usage
 
 ### Mouse 
-Left click: Select area for zoom in
-Middle click: Use next color palette
-Right click: Go back to the previous zoom (i.e. zoom out)
+- Left click: Select area for zoom in
+- Middle click: Use next color palette
+- Right click: Go back to the previous zoom (i.e. zoom out)
 
 ### Keyboard
-WASD or arrows keys: Move fractal
-Plus(+)/Minus(-) keys: Zoom in/out
-PageUp or c: Use next color palette
-PageDn: Use previous color palette
-F5: Increase maximum iterations by 1000 (may improve frame rendering)
-Esc or q: Exit
-```
+- WASD or arrows keys: Move fractal
+- Plus(+)/Minus(-) keys: Zoom in/out
+- PageUp or c: Use next color palette
+- PageDn: Use previous color palette
+- F5: Increase maximum iterations by 1000 (may improve frame rendering)
+- Esc or q: Exit
 
 
 ## Output samples
