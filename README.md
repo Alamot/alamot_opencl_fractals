@@ -5,7 +5,7 @@
 
 ## Description
 
-This is a python application that computes Fractals (for the time being only the Mandelbrot set) using OpenCL in order to distribute the work across different platforms / devices.
+This is a python application that computes and renders Fractals (for the time being only the Mandelbrot set) using OpenCL in order to parallelize and distribute the work across different platforms / devices.
 
 OpenCL (Open Computing Language) is a framework for writing programs that execute across heterogeneous platforms consisting of central processing units (CPUs), graphics processing units (GPUs), digital signal processors (DSPs), field-programmable gate arrays (FPGAs) and others. 
 
@@ -14,10 +14,10 @@ The application divides each fractal frame into blocks that are processed separa
 
 ## Requirements
 
-- Platform / device that support OpenCL >= 2.0 and coarse-grained SVM
-- kivy
-- numpy
-- pyopencl (with OpenCL >= 2.0 support)
+- At least one Platform / device (and its OpenCL driver) that support OpenCL >= 2.0 and coarse-grained SVM 
+- Kivy
+- NumPy
+- PyOpenCL (with OpenCL >= 2.0 support)
 
 
 ## Known limitations
@@ -41,8 +41,20 @@ $ pip install -r requirements.txt
 
 ## Run
 
+Because Kivy hijacks the command-line arguments, please prefer to use:
+
 ```
-usage: run.sh [-h] [-f {yes,no}] [-p (0-27)] [-w WIDTH] [-v HEIGHT] [-x X] [-y Y] [-z ZOOM]
+$ ./run.sh
+```
+
+Otherwise, set KIVY_NO_ARGS=1 before running alamot_opencl_fractals.py:
+``` 
+$ KIVY_NO_ARGS=1 ./alamot_opencl_fractals.py 
+```
+
+Command-line arguments:
+```
+usage: ./run.sh [-h] [-f {yes,no}] [-p (0-27)] [-w WIDTH] [-v HEIGHT] [-x X] [-y Y] [-z ZOOM]
 
 options:
   -h, --help            show this help message and exit
@@ -63,17 +75,18 @@ options:
 ## Mouse and keyboard usage
 
 ### Mouse 
-- Left click: Select area for zoom in
-- Middle click: Use next color palette
-- Right click: Go back to the previous zoom (i.e. zoom out)
+- **Left click**: Select area for zoom in
+- **Middle click**: Use next color palette
+- **Right click**: Go back to the previous zoom (i.e. zoom out)
 
 ### Keyboard
-- WASD or arrows keys: Move fractal
-- Plus(+)/Minus(-) keys: Zoom in/out
-- PageUp or c: Use next color palette
-- PageDn: Use previous color palette
-- F5: Increase maximum iterations by 1000 (may improve frame rendering)
-- Esc or q: Exit
+- **WASD or arrows keys**: Move fractal
+- **Plus (+) / Minus (-) keys**: Zoom in / out
+- **PageUp or c**: Use next color palette
+- **PageDn**: Use previous color palette
+- **Backspace**: Go back to the previous zoom (i.e. zoom out) 
+- *F5**: Increase maximum iterations by 1000 (may improve current frame rendering)
+- **Esc or q**: Exit
 
 
 ## Output samples

@@ -53,7 +53,7 @@ PALETTES = [{"RF": np.ubyte(15), "GF": np.ubyte(5),  "BF": np.ubyte(1)},
 
 # OpenCL code for the Mandelbrot set
 MANDELBROT_OPENCL_CODE = """
-// Enable double precision floats
+// Enable double-precision decimals (64-bit floats)
 #pragma OPENCL EXTENSION cl_khr_fp64 : enable
 
 __kernel void mandelbrot (const double x0, const double y0,
@@ -88,7 +88,7 @@ __kernel void mandelbrot (const double x0, const double y0,
 
     if (iters >= max_iters)
     {
-      framebuf[width * ypos + xpos] = 0xFF000000;
+      framebuf[width * ypos + xpos] = 0xFF000000; // (fully opaque black)
     }
     else
     {
@@ -124,11 +124,11 @@ class MyBoxLayout(BoxLayout):
         self.recty = 0
         self.images = []
         # We distribute the calculation of fractal image in distinct
-        # image blocks (number of blocks = number of OpenCL platforms)
+        # image blocks (number of blocks = number of OpenCL devices / workers)
         for _ in range(n_blocks):
             self.images.append(Image())
             self.add_widget(self.images[-1])
-        # Area selection rectangle (for zoom, initially hidden)
+        # Area selection rectangle (for zoom in, initially hidden)
         with self.canvas.after:
             Color(1, 1, 1)
             self.rect = Line(width=1, rectangle=(0, 0, 0, 0))
@@ -167,7 +167,7 @@ class FractalsApp(App):
                                  properties=[(cl.context_properties.PLATFORM,
                                               platform)])
             queue = cl.CommandQueue(context)
-            context = queue.context
+            context = queue.context  # A fix for some buggy implementations
             device = queue.device
             Logger.info("APP:  -> Device: %s", device.name)
             # Is coarse-grained buffer SVM (Shared Virtual Memory) supported?
@@ -189,7 +189,14 @@ class FractalsApp(App):
         Window.bind(on_touch_move=self.on_touch_move)
         Window.bind(on_touch_up=self.on_touch_up)
 
-        # Initialization of workers
+        self.init_workers()
+
+        # Draw the fractal
+        self.update_fractal()
+        return self.screen
+
+    def init_workers(self):
+        ''' Initialization of workers '''
         for idx, worker in enumerate(self.workers):
             # Build the OpenCL program for each worker
             program = cl.Program(worker["queue"].context,
@@ -216,10 +223,6 @@ class FractalsApp(App):
             worker["svm_buffer_shape"] = svm_buffer_shape
             worker["texture"] = self.screen.images[idx].texture
             worker["y_0"] = y_0
-
-        # Draw the fractal
-        self.update_fractal()
-        return self.screen
 
     def update_fractal(self):
         ''' Draw a fractal frame. '''
