@@ -5,11 +5,16 @@
 
 ## Description
 
-This is a python application that computes and renders Fractals (for the time being only the Mandelbrot set) using OpenCL in order to parallelize and distribute the work across different platforms / devices.
+This is a python application that computes and renders Fractals (for the time being only the Mandelbrot set) using OpenCL in order to parallelize and distribute the work across different devices.
 
-OpenCL (Open Computing Language) is a framework for writing programs that execute across heterogeneous platforms consisting of central processing units (CPUs), graphics processing units (GPUs), digital signal processors (DSPs), field-programmable gate arrays (FPGAs) and others. 
+OpenCL (Open Computing Language) is a framework for writing programs that execute across heterogeneous platforms, such as:
 
-The application divides each fractal frame into blocks that are processed separately by each OpenCL device. The results from each are combined to produce the final image. It makes use of coarse-grained SVM (Shared Virtual Memory) buffers to avoid copying large amount of data, back and forth.
+- Central Processing Units (CPUs)
+- Graphics Processing Units (GPUs)
+- Digital Signal Processors (DSPs)
+- Field-Programmable Gate Arrays (FPGAs)
+
+The application divides each fractal frame into blocks that are processed separately (each one by a different OpenCL device). The results from each device are combined to produce the final image. It also makes use of coarse-grained SVM (Shared Virtual Memory) buffers to avoid copying large amount of data, back and forth.
 
 
 ## Requirements
