@@ -44,7 +44,7 @@ $ git clone git@github.com:Alamot/alamot_opencl_fractals.git
 $ cd alamot_opencl_fractals
 $ python -m venv env
 $ source env/bin/activate
-$ pip install -r requirements.txt
+(env) $ pip install -r requirements.txt
 ```
 
 
