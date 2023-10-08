@@ -40,6 +40,8 @@ The application divides each fractal frame into blocks that are processed separa
 ## Install 
 
 ```
+$ git@github.com:Alamot/alamot_opencl_fractals.git
+$ cd alamot_opencl_fractals
 $ python -m venv env
 $ source env/bin/activate
 $ pip install -r requirements.txt
