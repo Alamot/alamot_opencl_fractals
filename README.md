@@ -16,6 +16,8 @@ OpenCL (Open Computing Language) is a framework for writing programs that execut
 
 The application divides each fractal frame into blocks that are processed separately (each one by a different OpenCL device). The results from each device are combined to produce the final image. It also makes use of coarse-grained SVM (Shared Virtual Memory) buffers to avoid copying large amount of data, back and forth.
 
+![Fractal Image](https://raw.githubusercontent.com/Alamot/alamot_opencl_fractals/master/images/image_blocks.jpg)
+
 
 ## Requirements
 
@@ -90,7 +92,7 @@ options:
 - **PageUp or c**: Use next color palette
 - **PageDn**: Use previous color palette
 - **Backspace**: Go back to the previous zoom (i.e. zoom out) 
-- *F5**: Increase maximum iterations by 1000 (may improve current frame rendering)
+- **F5**: Increase maximum iterations by 1000 (may improve current frame rendering)
 - **Esc or q**: Exit
 
 
