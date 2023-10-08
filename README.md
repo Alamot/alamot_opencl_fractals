@@ -7,7 +7,7 @@
 
 This is a python application that computes and renders Fractals (for the time being only the Mandelbrot set) using OpenCL in order to parallelize and distribute the work across different devices.
 
-OpenCL (Open Computing Language) is a framework for writing programs that execute across heterogeneous platforms, such as:
+OpenCL (Open Computing Language) is an open standard for writing programs that execute across heterogeneous platforms, such as:
 
 - Central Processing Units (CPUs)
 - Graphics Processing Units (GPUs)
