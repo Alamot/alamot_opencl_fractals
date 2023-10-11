@@ -69,10 +69,9 @@ __kernel void mandelbrot (const double x0, const double y0,
     double y = 0.0;
     double x2 = 0.0;
     double y2 = 0.0;
-    unsigned int iters = 0;
-    const size_t idx = get_global_id(0);
-    const size_t xpos = idx % width;
-    const size_t ypos = (idx - xpos) / width;
+    unsigned int iters = 0;    
+    const size_t xpos = get_global_id(0);
+    const size_t ypos = get_global_id(1);
     const double xstep = x0 + (xpos * step);
     const double ystep = y0 - (ypos * step);
 
@@ -202,13 +201,11 @@ class FractalsApp(App):
             program = cl.Program(worker["queue"].context,
                                  MANDELBROT_OPENCL_CODE).build()
             # Allocate coarse-grained SVM buffer for each worker
-            buffer_size = 4 * self.width * self.block_height
             # Size is multiplied by 4 because we have 4 bytes per pixel (RGBA)
+            buffer_size = 4 * self.width * self.block_height
             svm_buffer = cl.SVM(cl.csvm_empty(worker["queue"].context,
                                               buffer_size, np.ubyte))
             assert isinstance(svm_buffer.mem, np.ndarray)
-            # The buffer shape is divided by 4 because we'll pass it as uint32
-            svm_buffer_shape = tuple(e // 4 for e in svm_buffer.mem.shape)
             # Create a texture for each worker's image block
             texture = Texture.create(size=(self.width, self.block_height),
                                      colorfmt="rgba")
@@ -220,7 +217,7 @@ class FractalsApp(App):
             # Save worker parameters
             worker["program"] = program
             worker["svm_buffer"] = svm_buffer
-            worker["svm_buffer_shape"] = svm_buffer_shape
+            worker["svm_buffer_shape"] = (self.width, self.block_height)
             worker["texture"] = self.screen.images[idx].texture
             worker["y_0"] = y_0
 
